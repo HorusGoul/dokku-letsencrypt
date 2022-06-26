@@ -92,12 +92,19 @@ letsencrypt_acme() {
   set +e
   export DOKKU_UID=$(id -u)
   export DOKKU_GID=$(id -g)
+
+  prev_chmod=$(stat -c %a "$config_dir")
+  chmod 777 "$config_dir"
+
   docker run --rm \
     --user $DOKKU_UID:$DOKKU_GID \
     -p "$acme_port:$acme_port" \
     -v "$config_dir:/certs" \
     "${PLUGIN_IMAGE}:${PLUGIN_IMAGE_VERSION}" \
     "${config[@]}" run | sed "s/^/       /"
+
+  chown -R "$DOKKU_UID:$DOKKU_GID" "$config_dir"
+  chmod "$prev_chmod" "$config_dir"
 
   local exit_code=$?
   set -e
