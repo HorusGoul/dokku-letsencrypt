@@ -93,6 +93,9 @@ letsencrypt_acme() {
   export DOKKU_UID=$(id -u)
   export DOKKU_GID=$(id -g)
 
+  dokku_log_info1 "User: ${DOKKU_UID}:${DOKKU_GID}"
+
+
   prev_chmod=$(stat -c %a "$config_dir")
   chmod 777 "$config_dir"
 
