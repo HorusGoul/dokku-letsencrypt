@@ -97,7 +97,6 @@ letsencrypt_acme() {
   chmod 777 "$config_dir"
 
   docker run --rm \
-    --user $DOKKU_UID:$DOKKU_GID \
     -p "$acme_port:$acme_port" \
     -v "$config_dir:/certs" \
     "${PLUGIN_IMAGE}:${PLUGIN_IMAGE_VERSION}" \
