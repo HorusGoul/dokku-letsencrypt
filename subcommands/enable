@@ -100,9 +100,9 @@ letsencrypt_acme() {
     --user "$DOKKU_UID:$DOKKU_GID" \
     -p "$acme_port:$acme_port" \
     -v "$config_dir:/certs" \
-    --volume="/etc/group:/etc/group:ro" \
-    --volume="/etc/passwd:/etc/passwd:ro" \
-    --volume="/etc/shadow:/etc/shadow:ro" \
+    --volume="/etc/group:/etc/group" \
+    --volume="/etc/passwd:/etc/passwd" \
+    --volume="/etc/shadow:/etc/shadow" \
     "${PLUGIN_IMAGE}:${PLUGIN_IMAGE_VERSION}" \
     "${config[@]}" run | sed "s/^/       /"
 
