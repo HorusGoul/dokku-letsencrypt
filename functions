@@ -148,6 +148,7 @@ letsencrypt_configure_and_get_dir() {
   declare desc="assemble lego command line arguments and create a config hash directory for them"
 
   local app="$1" acme_port="$2"
+  local output_type="${3:-container}" # container or local
 
   local app_root="$DOKKU_ROOT/$app"
   local le_root="$app_root/letsencrypt"
@@ -188,8 +189,12 @@ letsencrypt_configure_and_get_dir() {
   # store config settings
   echo "--http.port :$acme_port $config" >"$config_dir/config"
 
-  # re-implement entire path to respect mapped DOKKU_ROOT when running in a container
-  echo "$DOKKU_HOST_ROOT/$app/letsencrypt/certs/$config_hash"
+  if [[ "$output_type" == "container" ]]; then
+    # re-implement entire path to respect mapped DOKKU_ROOT when running in a container
+    echo "$DOKKU_HOST_ROOT/$app/letsencrypt/certs/$config_hash"
+  else
+    echo "$config_dir"
+  fi
 }
 
 letsencrypt_get_email() {

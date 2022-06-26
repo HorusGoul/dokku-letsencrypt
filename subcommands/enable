@@ -84,7 +84,7 @@ letsencrypt_acme() {
   dokku_log_info1 "Getting letsencrypt certificate for ${app}..."
 
   # read arguments from appropriate config file into the config array
-  config_dir="$(letsencrypt_configure_and_get_dir "$app" "$acme_port")"
+  config_dir="$(letsencrypt_configure_and_get_dir "$app" "$acme_port" "local")"
   read -r -a config <"$config_dir/config"
 
   # run letsencrypt as a docker container using "certonly" mode
