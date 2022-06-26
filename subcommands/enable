@@ -40,6 +40,8 @@ letsencrypt_acmeproxy_off() {
 
   [[ -f "$app_config_dir/letsencrypt.conf" ]] && rm "$app_config_dir/letsencrypt.conf"
 
+  sleep 300
+
   restart_nginx | sed "s/^/       /"
 }
 
